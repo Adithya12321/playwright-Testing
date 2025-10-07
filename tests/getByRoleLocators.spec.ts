@@ -1,44 +1,55 @@
-import {expect,test} from '@playwright/test'
+import {expect,test, Page} from '@playwright/test'
+import { RolePage } from './pages'
 
+let page: Page;
+let p: RolePage;
 
-test.beforeEach(async({page}) => {
-    await page.goto('')
+test.beforeEach(async({page: browser}) => {
+    page = browser;
+    p = new RolePage(page);
+    await p.goto()
+})
+test.describe('1. getByRole() Locators tests', () => {
+    test.describe('Button section tests', () => {
+        test('buttons visibility test', async() => {
+            await expect(p.primaryButton).toBeVisible()
+            await expect(p.toggleButton).toBeVisible()
+            await expect(p.divWithButtonRole).toBeVisible()
+        })
+    })
+
+    test.describe('Form Elements test', () => {
+        test('username input test', async() => {
+            await p.username.fill('test123')
+            await expect(p.username).toBeVisible()
+        })
+
+        test('checkbox test', async() => {
+            await expect(p.acceptTerms).toBeVisible()
+            await expect(p.acceptTerms).not.toBeChecked()
+            await p.acceptTerms.setChecked(true)
+            await expect(p.acceptTerms).toBeChecked()
+        })
+    })
+
+    test.describe('Navigation test', () => {
+        test('test 1', async() => {
+            await expect(p.homeLink).toBeVisible()
+            await expect(p.homeLink).toBeVisible()
+            await expect(p.homeLink).toBeVisible()
+        })
+    })
 })
 
-test.describe('Buttons test', () => {
-
-    test('test1', async({page}) => {
-        await page.getByRole('button', {name : 'Primary Action'}).click()
-        await expect(page.getByRole('button', {name : 'Primary Action'})).toBeVisible()
+test.describe('2. getByText() Locators tests', () => {
+    test('test 1', async() => {
+        await expect(p.importantText).toBeVisible()
+        await expect(p.importantStrongText).toHaveText('important')
     })
 
-    test('test 2', async({page}) => {
-        await expect(page.getByRole('button', {name : 'Toggle Button'})).toBeVisible()
-    })
-
-    test('test 3', async({page}) => {
-        await expect(page.getByRole('button', {name : 'Div with button role'})).toBeVisible()
-    })
-})
-
-test.describe('Form Elements test', () => {
-    test('test 1', async({page}) => {
-        await page.getByRole('textbox', {name : 'Username'}).fill('test123')
-        await expect(page.getByRole('textbox', {name : 'Username'})).toBeVisible()
-    })
-
-    test('test 2', async({page}) => {
-        await page.locator('//*[@id="role-locators"]/div/div[2]/label[2]').isVisible()
-        await page.locator('//*[@id="role-locators"]/div/div[2]/label[2]').click()
-        await expect(page.locator('//*[@id="role-locators"]/div/div[2]/label[2]')).toBeChecked()
-    })
-})
-
-test.describe('Navigation', () => {
-    test('test 1', async({page}) => {
-        await expect(page.getByRole('menuitem', {name : 'Home'})).toBeVisible()
-        await expect(page.getByRole('menuitem', {name : 'Products'})).toBeVisible()
-        await expect(page.getByRole('menuitem', {name : 'Contact'})).toBeVisible()
-        await expect(page.getByRole('alert')).toBeVisible()
+    test('test 2', async() => {
+        await expect(p.colouredText).toBeVisible()
+        await expect(p.colouredRedText).toHaveText('colored text')
+        await expect(p.colouredRedText).toHaveCSS('color', 'rgb(255, 0, 0)')
     })
 })
