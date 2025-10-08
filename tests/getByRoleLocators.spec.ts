@@ -102,3 +102,14 @@ test.describe('6. getByTitle() Locators tests', () => {
         await expect(p.saveButtonTitle).toBeVisible()
     })
 })
+
+test.describe('7. getByTestId() locators tests', () => {
+    test('test 1', async() => {
+        await expect(p.userNameTid).toHaveText('John Doe')
+        await expect(p.userEmailTid).toHaveText('john.doe@example.com')
+        await expect(p.editProfileTid).toHaveText('Edit Profile')
+        await expect(p.productAPrice).toHaveText('$19.99')
+        await expect(p.productBPrice).toHaveText('$29.99')
+        await expect(p.productCPrice).toHaveText('$39.99')
+    })
+})

@@ -51,6 +51,14 @@ export class RolePage{
     readonly htmlTitle : Locator;
     readonly toolTipTitle : Locator;
     readonly saveButtonTitle : Locator;
+
+    //getByTestId() element locators
+    readonly userNameTid : Locator;
+    readonly userEmailTid : Locator;
+    readonly editProfileTid : Locator;
+    readonly productAPrice : Locator;
+    readonly productBPrice : Locator;
+    readonly productCPrice : Locator;
  
     constructor(page: Page){
         //page
@@ -103,6 +111,14 @@ export class RolePage{
         this.htmlTitle = page.getByTitle('HyperText Markup Language')
         this.toolTipTitle = page.getByTitle('Tooltip text')
         this.saveButtonTitle = page.getByTitle('Click to save your changes')
+
+        //getByTestId element lcoators xpath
+        this.userNameTid = page.getByTestId('profile-name')
+        this.userEmailTid = page.getByTestId('profile-email')
+        this.editProfileTid = page.getByTestId('edit-profile-btn')
+        this.productAPrice = page.getByTestId('product-card-1').getByTestId('product-price')
+        this.productBPrice = page.getByTestId('product-card-2').getByTestId('product-price')
+        this.productCPrice = page.getByTestId('product-card-3').getByTestId('product-price')
     }
 
     async goto() {
