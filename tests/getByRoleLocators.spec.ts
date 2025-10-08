@@ -52,4 +52,53 @@ test.describe('2. getByText() Locators tests', () => {
         await expect(p.colouredRedText).toHaveText('colored text')
         await expect(p.colouredRedText).toHaveCSS('color', 'rgb(255, 0, 0)')
     })
+
+    test('test 3', async() => {
+        await expect(p.listText1).toBeVisible()
+        await expect(p.listText2).toBeVisible()
+        await expect(p.listText2).toContainText('link')
+        await expect(p.listText3).toBeVisible()
+        await expect(p.lisText2Link).toBeVisible()
+    })
+
+    test('test 4', async() => {
+        await expect(p.submitFormButton).toBeVisible()
+    })
+})
+
+test.describe('3. getByLabel() Locators tests', () => {
+    test('test 1', async() => {
+        await p.emailAdress.fill('example@gmail.com')
+        await p.password.fill('password')
+        await p.yourAge.fill('24')
+        await p.shippingMethodStandard.setChecked(true)
+        await expect(p.shippingMethodExpress).not.toBeChecked()
+        await p.shippingMethodExpress.setChecked(true)
+        await expect(p.shippingMethodExpress).toBeChecked()
+    })
+})
+
+test.describe('4. getByPlaceholder() Locators tests', () => {
+    test('test 1', async() => {
+        await p.namePlaceholder.fill('username')
+        await p.phoneNumberPlaceHolder.fill('1234567890')
+        await p.messagePlaceHolder.fill('user message')
+        await p.searchProdcutsPlaceHolder.fill('product')
+        await p.searchButtonPlaceHolder.click()
+    })
+})
+
+test.describe('5. getByAltText() Locators tests', () => {
+    test('test 1', async() => {
+        await expect(p.playwrightLogo).toBeVisible()
+    })
+})
+
+test.describe('6. getByTitle() Locators tests', () => {
+    test('test 1', async() => {
+        await expect(p.homeTitle).toBeVisible()
+        await expect(p.htmlTitle).toBeVisible()
+        await expect(p.toolTipTitle).toBeVisible()
+        await expect(p.saveButtonTitle).toBeVisible()
+    })
 })
